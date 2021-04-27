@@ -63,7 +63,7 @@ def prime(num):
 @app.route('/slack-alert/<string:msg>')
 def post_to_slack(msg):
     data = { 'text': msg }
-    resp = requests.post("https://hooks.slack.com/services/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", json=data)
+    resp = requests.post("https://hooks.slack.com/services/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", json=data)
     if resp.status_code == 200:
         result = True
         mesg = "Message successfully posted to Slack channel "
