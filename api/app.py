@@ -60,23 +60,22 @@ def prime(num):
             return f"{c}\n\"input\": {num},\n\"output\": {b}\n{d}"
     return f"{c}\n\"input\": {num},\n\"output\": {a}\n{d}"
 
-@app.route('/slack-alert/<string:text>')
-def alert(text):
-    from urllib import request, parse
-    x="{"
-    y="}"
-    a = "True"
-    b = "False"
-    post = {"text": "{0}".format(text)}
-    try:
-        json_data = json.dumps(post)
-        req = request.Request("https://hooks.slack.com/services/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",data=json_data.encode('ascii'),headers={'Content-Type': 'application/json'}) 
-        resp = request.urlopen(req)
-        return f"{x}\n\"input\": {text},\n\"output\": {a}\n{y}"     
-    except Exception as em:
-        print("EXCEPTION: " + str(em))
-        return f"{x}\n\"input\": {text},\n\"output\": {b}\n{y}"
-    alert(f'{text}')
+@app.route('/slack-alert/<string:msg>')
+def post_to_slack(msg):
+    data = { 'text': msg }
+    resp = requests.post("https://hooks.slack.com/services/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", json=data)
+    if resp.status_code == 200:
+        result = True
+        mesg = "Message successfully posted to Slack channel "
+    else:
+        result = False
+        mesg = "There was a problem posting to the Slack channel (HTTP response: " + str(resp.status_code) + ")."
+
+    return jsonify(
+        input=msg,
+        message=mesg,
+        output=result
+    ), 200 if resp.status_code==200 else 400
     
 @app.route('/keyval', methods=['POST', 'PUT'])
 def kv_upsert():
