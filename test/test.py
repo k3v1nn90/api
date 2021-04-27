@@ -14,7 +14,9 @@ def flatten(list):
         return list
     else:
         return list[0]
-
+    
+encoding = 'utf-8'
+    
 # Grab the HOSTNAME and PORT to use for the HTTP connection from commandline arguments
 parser = argparse.ArgumentParser(description='Test the TCMG 412 REST API.')
 parser.add_argument('--host', dest='HOSTNAME', default='DOCKER_HOST', help='Specify the hostname')
@@ -31,7 +33,6 @@ if HOSTNAME == 'DOCKER_HOST':
 
 # Check that the host and port are valid; exit with error if they are not
 try:
-    encoding = 'utf-8'
     r = requests.get('http://' + str(HOSTNAME, encoding) + ':' + PORT + '/md5/test')
 except (requests.exceptions.ConnectionError, requests.exceptions.Timeout, requests.exceptions.InvalidURL):
     print ("Unable to reach API at address: %s:%s...\n" % (HOSTNAME, PORT))
@@ -77,7 +78,7 @@ for t in tests:
 
     # Set up the parts for the HTTP call
     ENDPOINT = t[0]
-    URL = 'http://' + HOSTNAME + ':' + PORT + ENDPOINT
+    URL = 'http://' + str(HOSTNAME, encoding) + ':' + PORT + ENDPOINT
     METHOD = t[1]
     STATUS = t[2]
     EXP_RESULT = t[3]
