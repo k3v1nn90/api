@@ -8,6 +8,7 @@ import os
 import socket
 import hashlib
 import redis
+import requests
 from flask import Flask, Response, jsonify, request
 from urllib.parse import urlparse, urlencode, quote_plus
 from math import sqrt
