@@ -15,21 +15,21 @@ red = redis.Redis(host="redis-server", db=0, socket_connect_timeout=2, socket_ti
 
 app = Flask(__name__)
 
-@app.route("/md5/<string:words>")
-def md5(words, chars=string.ascii_letters + string.digits):
-    x="{"
-    y="}"
-    leng = len(words)
-    words = urllib.parse.quote(words)
-    txt=(''.join(random.choice(chars) for x in range(leng)))
-    return f"{x}\n\"input\": {words},\n\"output\": {txt}\n{y}"
+# @app.route("/md5/<string:words>")
+# def md5(words, chars=string.ascii_letters + string.digits):
+#     x="{"
+#     y="}"
+#     leng = len(words)
+#     words = urllib.parse.quote(words)
+#     txt=(''.join(random.choice(chars) for x in range(leng)))
+#     return f"{x}\n\"input\": {words},\n\"output\": {txt}\n{y}"
 
-# @app.route('/md5/<string:words>')
-# def md5(words):
-#     return jsonify(
-#         input=words,
-#         output=hashlib.md5(words).hexdigest()
-#     )
+@app.route('/md5/<string:words>')
+def md5(words):
+    return jsonify(
+        input=words,
+        output=hashlib.md5(words.encode('utf8')).hexdigest()
+    )
 
 @app.route("/factorial/<int:num>")
 def factor(num,fact=1):
