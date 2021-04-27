@@ -17,8 +17,8 @@ def flatten(list):
 
 # Grab the HOSTNAME and PORT to use for the HTTP connection from commandline arguments
 parser = argparse.ArgumentParser(description='Test the TCMG 412 REST API.')
-parser.add_argument('--host', dest='HOSTNAME', default='DOCKER_HOST', help='Specify the hostname for the API (default: DOCKER_HOST)')
-parser.add_argument('--port', dest='PORT', default='5000', help='Specify the port on the API host (default: 5000)')
+parser.add_argument('--host', dest='HOSTNAME', default='DOCKER_HOST', help='Specify the hostname')
+parser.add_argument('--port', dest='PORT', default='5000', help='Specify the port')
 args = parser.parse_args()
 
 HOSTNAME = args.HOSTNAME
@@ -27,11 +27,11 @@ PORT = args.PORT
 # Handle the special case of 'DOCKER_HOST'
 if HOSTNAME == 'DOCKER_HOST':
     # group the docker host's IP address using the shell and `ip route`
-    HOSTNAME = subprocess.check_output(["/sbin/ip route | awk '/default/ { print $3 }'"], shell=True).strip()
+    HOSTNAME = (subprocess.check_output(["/sbin/ip route | awk '/default/ { print $3 }'"], shell=True).strip())
 
 # Check that the host and port are valid; exit with error if they are not
 try:
-    r = requests.get('http://' + HOSTNAME + ':' + PORT + '/md5/test')
+    r = requests.get('http://' + str(HOSTNAME, encoding) + ':' + PORT + '/md5/test')
 except (requests.exceptions.ConnectionError, requests.exceptions.Timeout, requests.exceptions.InvalidURL):
     print ("Unable to reach API at address: %s:%s...\n") % (HOSTNAME, PORT)
     print ("You can change the host or port using the --host and --port flags. Use -h for more info.\n")
