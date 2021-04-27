@@ -93,7 +93,7 @@ for t in tests:
             resp = requests.put(URL, json=JSON_PAYLOAD)
 
     # Start printing the output for the test results
-    print (" * ", ENDPOINT[:28], "... ").ljust(35-len(ENDPOINT[:28])),
+    print (" * ", ENDPOINT[:28], "... ".ljust(35-len(ENDPOINT[:28])),)
 
     # Check the HTTP status code first
     if resp.status_code in STATUS:
