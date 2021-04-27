@@ -33,11 +33,11 @@ if HOSTNAME == 'DOCKER_HOST':
 try:
     r = requests.get('http://' + HOSTNAME + ':' + PORT + '/md5/test')
 except (requests.exceptions.ConnectionError, requests.exceptions.Timeout, requests.exceptions.InvalidURL):
-    print "Unable to reach API at address: %s:%s...\n" % (HOSTNAME, PORT)
-    print "You can change the host or port using the --host and --port flags. Use -h for more info.\n"
+    print ("Unable to reach API at address: %s:%s...\n") % (HOSTNAME, PORT)
+    print ("You can change the host or port using the --host and --port flags. Use -h for more info.\n")
     sys.exit(1)
 else:
-    print "Testing REST API for on %s:%s...\n" % (HOSTNAME, PORT)
+    print ("Testing REST API for on %s:%s...\n") % (HOSTNAME, PORT)
 
 
 # Some constants for the API tests...
@@ -92,7 +92,7 @@ for t in tests:
             resp = requests.put(URL, json=JSON_PAYLOAD)
 
     # Start printing the output for the test results
-    print " * ", ENDPOINT[:28], "... ".ljust(35-len(ENDPOINT[:28])),
+    print (" * "), ENDPOINT[:28], "... ".ljust(35-len(ENDPOINT[:28])),
 
     # Check the HTTP status code first
     if resp.status_code in STATUS:
@@ -106,20 +106,20 @@ for t in tests:
 
         # Check the tests array for the expected results
         if EXP_RESULT == None or JSON_RESULT == EXP_RESULT:
-            print "Pass"
+            print ("Pass")
             PASSED += 1
         else:
-            print "Fail"
-            print "          - Expected output: '%s'" % str(EXP_RESULT)
-            print "          - Actual output:   '%s'" % str(JSON_RESULT)
-            print " DEBUG -- %s" % resp.json()
+            print ("Fail")
+            print ("          - Expected output: '%s'") % str(EXP_RESULT)
+            print ("          - Actual output:   '%s'") % str(JSON_RESULT)
+            print (" DEBUG -- %s") % resp.json()
             FAILED += 1
 
     # If the status code was not in the list of expected results
     else:
-        print "Fail"
-        print "          - Expected HTTP status: %s" % flatten(STATUS)
-        print "          - Actual HTTP status:   %i" % resp.status_code
+        print ("Fail")
+        print ("          - Expected HTTP status: %s") % flatten(STATUS)
+        print ("          - Actual HTTP status:   %i") % resp.status_code
         FAILED += 1
 
 # Return a value to indicate success / failure
