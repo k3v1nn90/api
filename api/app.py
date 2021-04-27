@@ -46,19 +46,20 @@ def fibonacchi_resp(input_int):
         input=input_int,
         output=fib(input_int)
     )
-    
-@app.route("/is-prime/<int:num>")
-def prime(num):
-    c="{"
-    d="}"
-    a = "True"
-    b = "False"
-    if num < 2: 
-        return f"{c}\n\"input\": {num},\n\"output\": {b}\n{d}"
+
+def is_prime(n):
+    if n < 2: return False
     for x in range(2, int(sqrt(n)) + 1):
-        if num % x == 0:
-            return f"{c}\n\"input\": {num},\n\"output\": {b}\n{d}"
-    return f"{c}\n\"input\": {num},\n\"output\": {a}\n{d}"
+        if n % x == 0:
+            return False
+    return True
+
+@app.route('/is-prime/<int:input_int>')
+def prime_check(input_int):
+    return jsonify(
+        input=input_int,
+        output=is_prime(input_int)
+    )
 
 @app.route('/slack-alert/<string:msg>')
 def post_to_slack(msg):
