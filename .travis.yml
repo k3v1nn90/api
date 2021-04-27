@@ -6,7 +6,8 @@ services:
 before_install:
     -cd test
     -docker build -t k3v1nn90/ttest .
-    -cd ../api
+    -cd ..
+    -cd api
     -docker build -t k3v1nn90/tapi .
     -docker-compose up -d
     -docker ps
