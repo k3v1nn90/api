@@ -1,7 +1,7 @@
 version: "3.4"
 services:
   web:
-    image: andem/tcmg476-project-5
+    image: k3v1nn90/tapi
     ports:
       - "5000:5000"
     networks:
