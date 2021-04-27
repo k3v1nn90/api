@@ -34,14 +34,12 @@ def factor(num,fact=1):
 def term(val):
     x="{"
     y="}"
-    Out = 0
-    Sequence = [0,1]
-    if val > 0:
-        while Out < val:
-            Out = Sequence[-1] + Sequence[-2]
-            if (Out < val):
-                Sequence.append(Out)
-        return f"{x}\n\"input\": {val},\n\"output\": {Sequence}\n{y}"
+    f_1, f_2 = 0, 1
+    num = [0]
+    while f_2 <= val:
+        num.append(f_2)
+        f_1, f_2 = f_2, f_1 + f_2
+        return f"{x}\n\"input\": {val},\n\"output\": {num}\n{y}"
     elif val <=0:
         return f"That is not a valid number"
 
