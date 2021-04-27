@@ -9,7 +9,7 @@ import argparse
 import subprocess
 
 HOSTNAME = ('0.0.0.0')
-PORT = ('5000')
+PORT = ('6379')
 
 # Check that the host and port are valid
 try:
