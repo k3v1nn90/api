@@ -58,7 +58,7 @@ tests = [
     ('/fibonacci/35',             'GET',  [200], FIB_SEQ),
     ('/fibonacci/test',           'GET',  [400,404,405], None),
     ('/is-prime/1',               'GET',  [200], False),
-    ('/is-prime/2',               'GET',  [200], True),
+    ('/is-prime/5',               'GET',  [200], True),
     ('/slack-alert/check',         'GET',  [200], True),
     ('/slack-alert/'+HTTP_ENCODE, 'GET',  [200], True),
     ('/kv-retrieve/test',        'GET',  [400,404,405], False),
