@@ -31,6 +31,7 @@ if HOSTNAME == 'DOCKER_HOST':
 
 # Check that the host and port are valid; exit with error if they are not
 try:
+    encoding = 'utf-8'
     r = requests.get('http://' + str(HOSTNAME, encoding) + ':' + PORT + '/md5/test')
 except (requests.exceptions.ConnectionError, requests.exceptions.Timeout, requests.exceptions.InvalidURL):
     print ("Unable to reach API at address: %s:%s...\n") % (HOSTNAME, PORT)
