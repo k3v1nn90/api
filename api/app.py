@@ -10,6 +10,7 @@ import hashlib
 import redis
 from flask import Flask, Response, jsonify, request
 from urllib.parse import urlparse, urlencode, quote_plus
+from math import sqrt
 
 redis = redis.Redis(host="redis-server", db=0, socket_connect_timeout=2, socket_timeout=2)
 
@@ -30,20 +31,18 @@ def factor(num,fact=1):
         fact = fact * i
     return f"{x}\n\"input\": {num},\n\"output\": {fact}\n{y}"
 
-def fib(n):
-    f_1, f_2 = 0, 1
-    ret = [0]
-    while f_2 <= n:
-        ret.append(f_2)
-        f_1, f_2 = f_2, f_1 + f_2
-    return ret
-
-@app.route('/fibonacci/<int:input_int>')
-def fibonacchi_resp(input_int):
-    return jsonify(
-        input=input_int,
-        output=fib(input_int)
-    )
+@app.route('/fibonacci/<int:val>')
+def term(val):
+    x="{"
+    y="}"
+    f1, f2 = 0, 1
+    num = [0]
+    while f_2 <= val:
+        num.append(f2)
+        f1, f2 = f2, f1 + f2
+        return f"{x}\n\"input\": {val},\n\"output\": {num}\n{y}"
+    elif val <=0:
+        return f"That is not a valid number"
     
 @app.route("/is-prime/<int:num>")
 def prime(num):
@@ -68,7 +67,7 @@ def alert(text):
     post = {"text": "{0}".format(text)}
     try:
         json_data = json.dumps(post)
-        req = request.Request("https://hooks.slack.com/services/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",data=json_data.encode('ascii'),headers={'Content-Type': 'application/json'}) 
+        req = request.Request("https://hooks.slack.com/services/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",data=json_data.encode('ascii'),headers={'Content-Type': 'application/json'}) 
         resp = request.urlopen(req)
         return f"{x}\n\"input\": {text},\n\"output\": {a}\n{y}"     
     except Exception as em:
