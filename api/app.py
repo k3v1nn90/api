@@ -34,30 +34,29 @@ def factor(num,fact=1):
 def term(val):
     x="{"
     y="}"
-    f_1, f_2 = 0, 1
-    num = [0]
-    while f_2 <= val:
-        num.append(f_2)
-        f_1, f_2 = f_2, f_1 + f_2
-        return f"{x}\n\"input\": {val},\n\"output\": {num}\n{y}"
+    Out = 0
+    Sequence = [0,1]
+    if val > 0:
+        while Out < val:
+            Out = Sequence[-1] + Sequence[-2]
+            if (Out < val):
+                Sequence.append(Out)
+        return f"{x}\n\"input\": {val},\n\"output\": {Sequence}\n{y}"
     elif val <=0:
         return f"That is not a valid number"
 
 @app.route("/is-prime/<int:num>")
 def prime(num):
-    x="{"
-    y="}"
+    c="{"
+    d="}"
     a = "True"
     b = "False"
-    if num > 1:
-        for i in range(2, int(num/2)+1):
-            if (num % i) == 0:
-                return f"{x}\n\"input\": {num},\n\"output\": {b}\n{y}"
-        else:
-            return f"{x}\n\"input\": {num},\n\"output\": {a}\n{y}"
-    else:
-        return f"{x}\n\"input\": {num},\n\"output\": {b}\n{y}"
-    return
+    if num < 2: 
+        return f"{c}\n\"input\": {num},\n\"output\": {b}\n{d}"
+    for x in range(2, int(sqrt(n)) + 1):
+        if num % x == 0:
+            return f"{c}\n\"input\": {num},\n\"output\": {b}\n{d}"
+    return f"{c}\n\"input\": {num},\n\"output\": {a}\n{d}"
 
 @app.route('/slack-alert/<string:text>')
 def alert(text):
