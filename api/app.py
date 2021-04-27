@@ -11,7 +11,7 @@ import redis
 from flask import Flask, Response, jsonify, request
 from urllib.parse import urlparse, urlencode, quote_plus
 
-red = redis.Redis(host="redis-server", db=0, socket_connect_timeout=2, socket_timeout=2)
+redis = redis.Redis(host="redis-server", db=0, socket_connect_timeout=2, socket_timeout=2)
 
 app = Flask(__name__)
 
