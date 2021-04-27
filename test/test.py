@@ -34,11 +34,11 @@ try:
     encoding = 'utf-8'
     r = requests.get('http://' + str(HOSTNAME, encoding) + ':' + PORT + '/md5/test')
 except (requests.exceptions.ConnectionError, requests.exceptions.Timeout, requests.exceptions.InvalidURL):
-    print ("Unable to reach API at address: %s:%s...\n") % (HOSTNAME, PORT)
+    print ("Unable to reach API at address: %s:%s...\n" % (HOSTNAME, PORT))
     print ("You can change the host or port using the --host and --port flags. Use -h for more info.\n")
     sys.exit(1)
 else:
-    print ("Testing REST API for on %s:%s...\n") % (HOSTNAME, PORT)
+    print ("Testing REST API for on %s:%s...\n" % (HOSTNAME, PORT))
 
 
 # Some constants for the API tests...
@@ -111,16 +111,16 @@ for t in tests:
             PASSED += 1
         else:
             print ("Fail")
-            print ("          - Expected output: '%s'") % str(EXP_RESULT)
-            print ("          - Actual output:   '%s'") % str(JSON_RESULT)
+            print ("          - Expected output: '%s'" % str(EXP_RESULT))
+            print ("          - Actual output:   '%s'" % str(JSON_RESULT))
             print (" DEBUG -- %s") % resp.json()
             FAILED += 1
 
     # If the status code was not in the list of expected results
     else:
         print ("Fail")
-        print ("          - Expected HTTP status: %s") % flatten(STATUS)
-        print ("          - Actual HTTP status:   %i") % resp.status_code
+        print ("          - Expected HTTP status: %s" % flatten(STATUS))
+        print ("          - Actual HTTP status:   %i" % resp.status_code)
         FAILED += 1
 
 # Return a value to indicate success / failure
