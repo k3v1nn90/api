@@ -1,0 +1,20 @@
+language: python
+
+services:
+    - docker
+
+before_install:
+    -cd test
+    -docker build -t k3v1nn90/ttest .
+    -cd ../api
+    -docker build -t k3v1nn90/tapi .
+    -docker-compose up -d
+    -docker ps
+
+script:
+    -docker run k3v1nn90/ttest
+
+after_success:
+    -docker login -u $D_USERNAME -p $_PASSWORD
+    -docker push k3v1nn90/tapi
+    
