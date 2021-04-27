@@ -114,7 +114,7 @@ for t in tests:
             print ("Fail")
             print ("          - Expected output: '%s'" % str(EXP_RESULT))
             print ("          - Actual output:   '%s'" % str(JSON_RESULT))
-            print (" DEBUG -- %s") % resp.json()
+            print (" DEBUG -- %s" % resp.json())
             FAILED += 1
 
     # If the status code was not in the list of expected results
