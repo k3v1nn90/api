@@ -32,18 +32,20 @@ def factor(num,fact=1):
         fact = fact * i
     return f"{x}\n\"input\": {num},\n\"output\": {fact}\n{y}"
 
-@app.route('/fibonacci/<int:val>')
-def term(val):
-    x="{"
-    y="}"
-    f1, f2 = 0, 1
-    num = [0]
-    while f_2 <= val:
-        num.append(f2)
-        f1, f2 = f2, f1 + f2
-        return f"{x}\n\"input\": {val},\n\"output\": {num}\n{y}"
-    elif val <=0:
-        return f"That is not a valid number"
+def fib(n):
+    f_1, f_2 = 0, 1
+    ret = [0]
+    while f_2 <= n:
+        ret.append(f_2)
+        f_1, f_2 = f_2, f_1 + f_2
+    return ret
+
+@app.route('/fibonacci/<int:input_int>')
+def fibonacchi_resp(input_int):
+    return jsonify(
+        input=input_int,
+        output=fib(input_int)
+    )
     
 @app.route("/is-prime/<int:num>")
 def prime(num):
@@ -58,22 +60,23 @@ def prime(num):
             return f"{c}\n\"input\": {num},\n\"output\": {b}\n{d}"
     return f"{c}\n\"input\": {num},\n\"output\": {a}\n{d}"
 
-@app.route('/slack-alert/<string:txt>')
-def post_to_slack(txt):
-    data = { 'text': txt }
-    resp = requests.post("https://hooks.slack.com/services/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", json=data)
-    if resp.status_code == 200:
-        result = True
-        mesg = "Message successfully posted to Slack channel " + "#group5"
-    else:
-        result = False
-        mesg = "There was a problem posting to the Slack channel (HTTP response: " + str(resp.status_code) + ")."
-
-    return jsonify(
-        input=txt,
-        message=mesg,
-        output=result
-    ), 200 if resp.status_code==200 else 400
+@app.route('/slack-alert/<string:text>')
+def alert(text):
+    from urllib import request, parse
+    x="{"
+    y="}"
+    a = "True"
+    b = "False"
+    post = {"text": "{0}".format(text)}
+    try:
+        json_data = json.dumps(post)
+        req = request.Request("https://hooks.slack.com/services/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",data=json_data.encode('ascii'),headers={'Content-Type': 'application/json'}) 
+        resp = request.urlopen(req)
+        return f"{x}\n\"input\": {text},\n\"output\": {a}\n{y}"     
+    except Exception as em:
+        print("EXCEPTION: " + str(em))
+        return f"{x}\n\"input\": {text},\n\"output\": {b}\n{y}"
+    alert(f'{text}')
     
 @app.route('/keyval', methods=['POST', 'PUT'])
 def kv_upsert():
