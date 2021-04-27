@@ -37,7 +37,7 @@ def factor(num,fact=1):
     y="}"
     for i in range(1,num+1):
         fact = fact * i
-    return f"{x}\n\"input\": {num},\n\" output\": {fact}\n{y}"
+    return f"{x}\n\"input\": {num},\n\"output\": {fact}\n{y}"
 
 @app.route('/fibonacci/<int:val>')
 def term(val):
