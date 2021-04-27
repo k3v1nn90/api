@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import requests
-import requests.exceptions
 import hashlib
 import os
 import sys
@@ -94,7 +93,7 @@ for t in tests:
             resp = requests.put(URL, json=JSON_PAYLOAD)
 
     # Start printing the output for the test results
-    print (" * "), ENDPOINT[:28], "... ".ljust(35-len(ENDPOINT[:28])),
+    print (" * ", ENDPOINT[:28], "... ".ljust(35-len(ENDPOINT[:28]))),
 
     # Check the HTTP status code first
     if resp.status_code in STATUS:
@@ -113,15 +112,12 @@ for t in tests:
         else:
             print ("Fail")
             print ("          - Expected output: '%s'" % str(EXP_RESULT))
-            print ("          - Actual output:   '%s'" % str(JSON_RESULT))
-            print (" DEBUG -- %s" % resp.json())
             FAILED += 1
 
     # If the status code was not in the list of expected results
     else:
         print ("Fail")
         print ("          - Expected HTTP status: %s" % flatten(STATUS))
-        print ("          - Actual HTTP status:   %i" % resp.status_code)
         FAILED += 1
 
 # Return a value to indicate success / failure
