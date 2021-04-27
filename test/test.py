@@ -61,14 +61,14 @@ tests = [
     ('/is-prime/2',               'GET',  [200], True),
     ('/slack-alert/check',         'GET',  [200], True),
     ('/slack-alert/'+HTTP_ENCODE, 'GET',  [200], True),
-#     ('/kv-retrieve/test',        'GET',  [400,404,405], False),
-#     ('/kv-record/test',          'POST', [200], True, 'test1', 'fun'),
-#     ('/kv-retrieve/test',        'GET',  [200], 'fun'),
-#     ('/kv-record/test',          'POST', [400,404,405,409], False, 'test1', 'fun'),
-#     ('/kv-record/test1',          'POST', [200], True, 'test2', '34'),
-#     ('/kv-record/test',          'PUT',  [200], True, 'test1', 'thing'),
-#     ('/kv-retrieve/test',        'GET',  [200], 'thing'),
-#     ('/kv-record/test2',          'PUT',  [400,404,405,409], False, 'test3', '54')
+    ('/kv-retrieve/test',        'GET',  [400,404,405], False),
+    ('/kv-record/test',          'POST', [200], True, 'test1', 'fun'),
+    ('/kv-retrieve/test',        'GET',  [200], 'fun'),
+    ('/kv-record/test',          'POST', [400,404,405,409], False, 'test1', 'fun'),
+    ('/kv-record/test1',          'POST', [200], True, 'test2', '34'),
+    ('/kv-record/test',          'PUT',  [200], True, 'test1', 'thing'),
+    ('/kv-retrieve/test',        'GET',  [200], 'thing'),
+    ('/kv-record/test2',          'PUT',  [400,404,405,409], False, 'test3', '54')
 ]
 
 FAILED = 0
