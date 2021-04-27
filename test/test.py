@@ -11,7 +11,7 @@ import flask
 
 # Grab the HOSTNAME and PORT to use for the HTTP connection from commandline arguments
 parser = argparse.ArgumentParser(description='Test REST API.')
-parser.add_argument('--host', dest='HOSTNAME', default='127.0.0.1', help='Specify the hostname for the API')
+parser.add_argument('--host', dest='HOSTNAME', default='0.0.0.0', help='Specify the hostname for the API')
 parser.add_argument('--port', dest='PORT', default='5000', help='Specify the port on the API host')
 args = parser.parse_args()
 
