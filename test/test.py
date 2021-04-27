@@ -7,6 +7,7 @@ import os
 import sys
 import argparse
 import subprocess
+import flask
 
 # Helper functions
 def flatten(list):
@@ -16,18 +17,13 @@ def flatten(list):
         return list[0]
 
 # Grab the HOSTNAME and PORT to use for the HTTP connection from commandline arguments
-parser = argparse.ArgumentParser(description='Test the TCMG 476 REST API.')
-parser.add_argument('--host', dest='HOSTNAME', default='DOCKER_HOST', help='Specify the hostname for the API (default: DOCKER_HOST)')
-parser.add_argument('--port', dest='PORT', default='5000', help='Specify the port on the API host (default: 5000)')
+parser = argparse.ArgumentParser(description='Test REST API.')
+parser.add_argument('--host', dest='HOSTNAME', default='127.0.0.1', help='Specify the hostname for the API')
+parser.add_argument('--port', dest='PORT', default='5000', help='Specify the port on the API host')
 args = parser.parse_args()
 
 HOSTNAME = args.HOSTNAME
 PORT = args.PORT
-
-# Handle the special case of 'DOCKER_HOST'
-if HOSTNAME == 'DOCKER_HOST':
-    # group the docker host's IP address using the shell and `ip route`
-    HOSTNAME = subprocess.check_output(["/sbin/ip route | awk '/default/ { print $3 }'"], shell=True).strip()
 
 # Check that the host and port are valid; exit with error if they are not
 try:
@@ -113,10 +109,10 @@ for t in tests:
 
         # Check the tests array for the expected results
         if EXP_RESULT == None or JSON_RESULT == EXP_RESULT:
-            print ("✔︎")
+            print ("WORKS")
             PASSED += 1
         else:
-            print ("❌ FAILED")
+            print ("FAILED")
             print ("          - Expected output: '%s'") % str(EXP_RESULT)
             print ("          - Actual output:   '%s'") % str(JSON_RESULT)
             print (" DEBUG -- %s") % resp.json()
@@ -124,7 +120,7 @@ for t in tests:
 
     # If the status code was not in the list of expected results
     else:
-        print ("❌ FAILED")
+        print ("FAILED")
         print ("          - Expected HTTP status: %s") % flatten(STATUS)
         print ("          - Actual HTTP status:   %i") % resp.status_code
         FAILED += 1

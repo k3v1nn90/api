@@ -7,11 +7,11 @@ import random
 import os
 import socket
 import hashlib
-from redis import Redis, RedisError
+import redis
 from flask import Flask, Response, jsonify, request
 from urllib.parse import urlparse, urlencode, quote_plus
 
-redis = Redis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2)
+red = redis.Redis(host="redis-server", db=0, socket_connect_timeout=2, socket_timeout=2)
 
 app = Flask(__name__)
 
@@ -109,7 +109,7 @@ def kv_upsert():
 
     try:
         test_value = redis.get(_JSON['key'])
-    except RedisError:
+    except redis.RedisError:
         _JSON['error'] = "Cannot connect to redis."
         return jsonify(_JSON), 400
     
@@ -139,7 +139,7 @@ def gdkey(k):
     } 
     try:
         test = redis.get(k)
-    except RedisError:
+    except redis.RedisError:
         JSON['error'] = "Cannot connect to redis."
         return jsonify(JSON), 400
     if test == None:
