@@ -13,7 +13,7 @@ PORT = ('6379')
 
 # Check that the host and port are valid
 try:
-    r = requests.get('http://0.0.0.0:5000/md5/test')
+    r = requests.get('http://'+HOSTNAME+':'+PORT+'/md5/test')
 except (requests.exceptions.ConnectionError, requests.exceptions.Timeout, requests.exceptions.InvalidURL):
     print ("Unable to reach API")
     sys.exit(1)
