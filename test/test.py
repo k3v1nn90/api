@@ -9,13 +9,6 @@ import argparse
 import subprocess
 import flask
 
-# Helper functions
-def flatten(list):
-    if len(list) > 1:
-        return list
-    else:
-        return list[0]
-
 # Grab the HOSTNAME and PORT to use for the HTTP connection from commandline arguments
 parser = argparse.ArgumentParser(description='Test REST API.')
 parser.add_argument('--host', dest='HOSTNAME', default='127.0.0.1', help='Specify the hostname for the API')
