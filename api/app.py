@@ -34,11 +34,13 @@ def factor(num,fact=1):
 def term(val):
     x="{"
     y="}"
-    f_1, f_2 = 0, 1
-    val = [0]
-    while f_2 <= n:
-        val.append(f_2)
-        f_1, f_2 = f_2, f_1 + f_2
+    Out = 0
+    Sequence = [0,1]
+    if val > 0:
+        while Out < val:
+            Out = Sequence[-1] + Sequence[-2]
+            if (Out < val):
+                Sequence.append(Out)
         return f"{x}\n\"input\": {val},\n\"output\": {Sequence}\n{y}"
     elif val <=0:
         return f"That is not a valid number"
@@ -47,11 +49,17 @@ def term(val):
 def prime(num):
     x="{"
     y="}"
-    if num < 2: return False
-    for x in range(2, int(sqrt(num)) + 1):
-        if num % x == 0:
-            return False
-    return True
+    a = "True"
+    b = "False"
+    if num > 1:
+        for i in range(2, int(num/2)+1):
+            if (num % i) == 0:
+                return f"{x}\n\"input\": {num},\n\"output\": {b}\n{y}"
+        else:
+            return f"{x}\n\"input\": {num},\n\"output\": {a}\n{y}"
+    else:
+        return f"{x}\n\"input\": {num},\n\"output\": {b}\n{y}"
+    return
 
 @app.route('/slack-alert/<string:text>')
 def alert(text):
