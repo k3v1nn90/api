@@ -7,7 +7,6 @@ import os
 import sys
 import argparse
 import subprocess
-import flask
 
 HOSTNAME = ('127.0.0.1')
 PORT = ('5000')
