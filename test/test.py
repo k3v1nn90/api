@@ -9,24 +9,17 @@ import argparse
 import subprocess
 import flask
 
-# Grab the HOSTNAME and PORT to use for the HTTP connection from commandline arguments
-parser = argparse.ArgumentParser(description='Test REST API.')
-parser.add_argument('--host', dest='HOSTNAME', default='127.0.0.1', help='Specify the hostname for the API')
-parser.add_argument('--port', dest='PORT', default='5000', help='Specify the port on the API host')
-args = parser.parse_args()
+HOSTNAME = ('127.0.0.1')
+PORT = ('5000')
 
-HOSTNAME = args.HOSTNAME
-PORT = args.PORT
-
-# Check that the host and port are valid; exit with error if they are not
+# Check that the host and port are valid
 try:
     r = requests.get('http://' + HOSTNAME + ':' + PORT + '/md5/test')
 except (requests.exceptions.ConnectionError, requests.exceptions.Timeout, requests.exceptions.InvalidURL):
-    print ("Unable to reach API at address: %s:%s...\n") % (HOSTNAME, PORT)
-    print ("You can change the host or port using the --host and --port flags. Use -h for more info.\n")
+    print ("Unable to reach API at address")
     sys.exit(1)
 else:
-    print ("Testing REST API for on %s:%s...\n") % (HOSTNAME, PORT)
+    print ("Testing REST API")
 
 # Some constants for the API tests...
 HASH_1 = '098f6bcd4621d373cade4e832627b4f6'   # 'test'
@@ -36,7 +29,7 @@ HTTP_ENCODE = "This%20is%20a%20longer%20string.%0D%0AIt%20even%20includes%20a%20
 
 print ("Testing API for expected results...\n")
 
-# Describe all the API tests: URL, method, status code, JSON('output'), [ JSON('key'), JSON('value') ]
+# API tests
 tests = [
     ('/md5/test',                 'GET',  [200], HASH_1),
     ('/md5/hello%20world',        'GET',  [200], HASH_2),
@@ -94,7 +87,7 @@ for t in tests:
     if resp.status_code in STATUS:
 
         # Get the result from the 'output' key in the JSON response
-        _no_json = "Cannot read JSON payload (failed to locate 'output' key)!"
+        _no_json = "Cannot read JSON payload"
         try:
             JSON_RESULT = resp.json().get('output', _no_json)
         except:
@@ -102,7 +95,7 @@ for t in tests:
 
         # Check the tests array for the expected results
         if EXP_RESULT == None or JSON_RESULT == EXP_RESULT:
-            print ("WORKS")
+            print ("PASSED")
             PASSED += 1
         else:
             print ("FAILED")
@@ -114,13 +107,7 @@ for t in tests:
     # If the status code was not in the list of expected results
     else:
         print ("FAILED")
-        print ("          - Expected HTTP status: %s") % flatten(STATUS)
-        print ("          - Actual HTTP status:   %i") % resp.status_code
         FAILED += 1
-
-# Calculate the passing rate
-rate = float(PASSED) / float(FAILED+PASSED) * 100.0
-print ("\n\n Passed %i of %i tests (%i%% Success rate)") % (PASSED, FAILED+PASSED, rate)
 
 # Return a value to indicate success / failure
 sys.exit(FAILED)
