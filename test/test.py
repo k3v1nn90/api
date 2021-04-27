@@ -93,7 +93,7 @@ for t in tests:
             resp = requests.put(URL, json=JSON_PAYLOAD)
 
     # Start printing the output for the test results
-    print (" * ", ENDPOINT[:28], "... ".ljust(35-len(ENDPOINT[:28]))),
+    print (" * ", ENDPOINT[:28], "... ").ljust(35-len(ENDPOINT[:28])),
 
     # Check the HTTP status code first
     if resp.status_code in STATUS:
@@ -111,13 +111,11 @@ for t in tests:
             PASSED += 1
         else:
             print ("Fail")
-            print ("          - Expected output: '%s'" % str(EXP_RESULT))
             FAILED += 1
 
     # If the status code was not in the list of expected results
     else:
         print ("Fail")
-        print ("          - Expected HTTP status: %s" % flatten(STATUS))
         FAILED += 1
 
 # Return a value to indicate success / failure
