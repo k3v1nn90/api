@@ -7,11 +7,11 @@ import random
 import os
 import socket
 import hashlib
-#from redis import Redis, RedisError
+from redis import Redis, RedisError
 from flask import Flask, Response, jsonify, request
 from urllib.parse import urlparse, urlencode, quote_plus
 
-#redis = Redis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2)
+redis = Redis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2)
 
 app = Flask(__name__)
 
